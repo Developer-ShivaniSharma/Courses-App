@@ -7,10 +7,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Share
@@ -67,19 +72,24 @@ fun CourseLayout(topic: Topic, modifier: Modifier = Modifier) {
             Column {
                 Text(
                     text = LocalContext.current.getString(topic.topicName),
-                    modifier = Modifier.padding(top = 30.dp),
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        top = 16.dp,
+                        bottom = 8.dp
+                    ),
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Row {
                     Image(
                         painter = painterResource(R.drawable.ic_grain),
                         contentDescription = null,
+                        modifier = Modifier.padding(start = 16.dp, end = 8.dp),
                         colorFilter = ColorFilter.tint(Color.Black)
                     )
-
                     Text(
                         text = topic.associatedCourse.toString(),
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier.padding(top = 5.dp),
                         style = MaterialTheme.typography.labelMedium
                     )
 
@@ -90,10 +100,42 @@ fun CourseLayout(topic: Topic, modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun CourseList(topicList: List<Topic>, modifier: Modifier = Modifier) {
+    LazyColumn(modifier = Modifier) {
+        items(topicList) { topic ->
+            CourseLayout(
+                topic = topic,
+                modifier = Modifier.padding(16.dp)
+            )
+
+        }
+    }
+
+}
+
 @Preview(showBackground = true)
 @Composable
 fun CourseLayoutPreview() {
     CoursesAppTheme {
         CourseLayout(Topic(R.string.architecture, 58, R.drawable.architecture))
     }
+}
+@Preview(showBackground = true)
+@Composable
+fun CourseListPreview() {
+    CourseList(topicList = listOf(
+        Topic(R.string.architecture, 58, R.drawable.architecture),
+        Topic(R.string.architecture, 58, R.drawable.architecture),
+        Topic(R.string.architecture, 58, R.drawable.architecture),
+        Topic(R.string.architecture, 58, R.drawable.architecture),
+        Topic(R.string.architecture, 58, R.drawable.architecture),
+        Topic(R.string.architecture, 58, R.drawable.architecture),
+        Topic(R.string.architecture, 58, R.drawable.architecture),
+        Topic(R.string.architecture, 58, R.drawable.architecture),
+        Topic(R.string.architecture, 58, R.drawable.architecture),
+        Topic(R.string.architecture, 58, R.drawable.architecture),
+        Topic(R.string.architecture, 58, R.drawable.architecture),
+    )
+    )
 }
